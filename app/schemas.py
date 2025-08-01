@@ -102,39 +102,48 @@ class PlanUpdate(BaseModel):
 class PlanResponse(PlanBase):
     id: UUID
     user_id: UUID
+    conversation: Optional[str] = None
+    is_save: bool = False
+    pined_date: Optional[str] = None
     created_at: datetime
     updated_at: datetime
 
     model_config = {
         "from_attributes": True
     }
-
 # --------------------
 # Class Schemas
 # --------------------
 class ClassBase(BaseModel):
     title: str
     description: Optional[str] = None
-    schedule_info: Optional[str] = None  # Could be more structured later
+    schedule_info: Optional[str] = None
 
-class ClassCreate(ClassBase):
-    pass
+class ClassCreate(BaseModel):
+    title: str
+    description: Optional[str] = None
+    schedule_info: Optional[str] = None
+    plan_ids: Optional[List[str]] = None
 
 class ClassUpdate(BaseModel):
-    title: Optional[str]
-    description: Optional[str]
-    schedule_info: Optional[str]
+    title: Optional[str] = None
+    description: Optional[str] = None
+    schedule_info: Optional[str] = None
+    plan_ids: Optional[List[str]] = None  # ✅ Add this
 
-class ClassResponse(ClassBase):
+class ClassResponse(BaseModel):
     id: UUID
     user_id: UUID
+    title: str
+    description: Optional[str] = None
+    schedule_info: Optional[str] = None
+    plan_ids: List[str]
     created_at: datetime
     updated_at: datetime
 
     model_config = {
         "from_attributes": True
     }
-
 # --------------------
 # Chat & Message Schemas
 # --------------------
@@ -142,7 +151,8 @@ class MessageBase(BaseModel):
     message_text: str
 
 class MessageCreate(MessageBase):
-    receiver_id: UUID  # Who receives this message
+    # ✅ receiver_id REMOVED since it's always the AI
+    pass
 
 class MessageResponse(MessageBase):
     id: UUID
@@ -157,7 +167,7 @@ class MessageResponse(MessageBase):
 
 class ChatResponse(BaseModel):
     id: UUID
-    participants: List[UUID]  # List of user IDs in this chat
+    participants: List[UUID]
     last_message: Optional[MessageResponse] = None
     updated_at: datetime
 
@@ -166,7 +176,7 @@ class ChatResponse(BaseModel):
     }
 
 # --------------------
-# PlanRequest for your earlier example
+# PlanRequest
 # --------------------
 class PlanRequest(BaseModel):
     plan: str  # "monthly" or "yearly"

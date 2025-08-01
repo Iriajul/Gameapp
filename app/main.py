@@ -54,10 +54,8 @@ app.openapi = custom_openapi
 origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://93dddca0bf3f.ngrok-free.app",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://127.0.0.1:8000",
+    "https://e22bbebece93.ngrok-free.app",
+    "https://731gglsx-8000.inc1.devtunnels.ms/",
     "http://localhost:8000",
     "https://gameplan-demo.vercel.app",
 ]
