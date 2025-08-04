@@ -55,7 +55,7 @@ origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://e22bbebece93.ngrok-free.app",
-    "https://731gglsx-8000.inc1.devtunnels.ms/",
+    "https://ppp7rljm-8000.inc1.devtunnels.ms/",
     "http://localhost:8000",
     "https://gameplan-demo.vercel.app",
 ]

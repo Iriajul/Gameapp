@@ -3,7 +3,14 @@ from sqlalchemy.orm import Session
 from authlib.integrations.starlette_client import OAuth
 from app.database import get_db
 from app import models, auth
-from app.config import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET
+from app.config import (
+    GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET,
+    FACEBOOK_CLIENT_ID,
+    FACEBOOK_CLIENT_SECRET,
+    GOOGLE_REDIRECT_URI,
+    FACEBOOK_REDIRECT_URI,
+)
 
 router = APIRouter()
 oauth = OAuth()
@@ -14,7 +21,7 @@ oauth.register(
     client_id=GOOGLE_CLIENT_ID,
     client_secret=GOOGLE_CLIENT_SECRET,
     server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
-    client_kwargs={"scope": "openid email profile"},
+    client_kwargs={"scope": "email"},
 )
 
 # Register Facebook OAuth client
@@ -30,8 +37,7 @@ oauth.register(
 # --- Google Login ---
 @router.get("/auth/google")
 async def google_login(request: Request):
-    redirect_uri = request.url_for("google_auth_callback")
-    return await oauth.google.authorize_redirect(request, redirect_uri)
+    return await oauth.google.authorize_redirect(request, GOOGLE_REDIRECT_URI)
 
 @router.get("/auth/google/callback")
 async def google_auth_callback(request: Request, db: Session = Depends(get_db)):
@@ -65,8 +71,7 @@ async def google_auth_callback(request: Request, db: Session = Depends(get_db)):
 # --- Facebook Login ---
 @router.get("/auth/facebook")
 async def facebook_login(request: Request):
-    redirect_uri = request.url_for("facebook_auth_callback")
-    return await oauth.facebook.authorize_redirect(request, redirect_uri)
+    return await oauth.facebook.authorize_redirect(request, FACEBOOK_REDIRECT_URI)
 
 @router.get("/auth/facebook/callback")
 async def facebook_auth_callback(request: Request, db: Session = Depends(get_db)):

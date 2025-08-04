@@ -1,5 +1,16 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+python-dotenv
+passlib[bcrypt]
+python-jose
+pydantic
+authlib
+stripe
 langchain
 langchain-community
 langchain-google-genai
 tavily-python
-python-dotenv
+itsdangerous
+pydantic[email]

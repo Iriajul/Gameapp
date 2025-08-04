@@ -55,7 +55,7 @@ agent_executor = AgentExecutor(
     agent=agent,
     tools=[search_tool],
     memory=memory,
-    verbose=True  # Set False for production
+    verbose=True  
 )
 
 # 6. AI response generator with retry logic
